@@ -1,7 +1,13 @@
+import Header from "~/components/Footer";
+import Footer from "~/components/Header";
+import LandingContents from "~/components/LandingContents";
+
 export default function Landing(){
     return(
         <div>
-            <p>Sup Browskis!</p>
+            <Header />
+            <LandingContents />
+            <Footer />
         </div>
     )
 }
