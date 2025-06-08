@@ -10,21 +10,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
 
       - name: Build the project
         run: npm run build
+       
 
-      - name: Deploy to production
-        run: npm run deploy
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest 
+
+      - name: Pull Vercel environment information
+        run: vercel pull --yes --environment production
+
+      - name: Deploy to Vercel
+        run: vercel --prod --confirm --token ${{ secrets.VERCEL_TOKEN }}
         env:
-          NODE_ENV: production
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      
+      - name: Create preview deployment
+        run: vercel --prod --confirm --token ${{ secrets.VERCEL_TOKEN }} --previews
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
