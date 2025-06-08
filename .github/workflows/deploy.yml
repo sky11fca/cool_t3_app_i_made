@@ -6,10 +6,7 @@ on:
       - main
 
 env:
-  AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-  AUTH_DISCORD_ID: ${{ secrets.AUTH_DISCORD_ID }}
-  AUTH_DISCORD_SECRET: ${{ secrets.AUTH_DISCORD_SECRET }}
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  
 
 jobs:
   deploy:
@@ -28,6 +25,11 @@ jobs:
 
       - name: Build the project
         run: npm run build
+        env:
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          AUTH_DISCORD_ID: ${{ secrets.AUTH_DISCORD_ID }}
+          AUTH_DISCORD_SECRET: ${{ secrets.AUTH_DISCORD_SECRET }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
        
 
       - name: Install Vercel CLI
