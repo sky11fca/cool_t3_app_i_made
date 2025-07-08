@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main
-
+env:
+  AUTH_SECRET: "aB70zSG63WNifaIuzkjKT4u5RloH9VY5ySC9QCN4GoE="
+  AUTH_DISCORD_ID: "1380473007771750462"
+  AUTH_DISCORD_SECRET: "3976730fcda219040d1358c57e1ecdafabc71e85c8895364a37eef99dacb820a"
+  DATABASE_URL: "postgresql://postgres.oxubmywvdkdwhdleitzq:BobbyDB3002@aws-0-us-east-2.pooler.supabase.com:5432/postgres"
   
 
 jobs:
@@ -22,23 +26,10 @@ jobs:
       - name: Install dependencies
         run: npm install
       
-      - name: Set up environment variables
-        run: |
-          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> $GITHUB_ENV
-          echo "AUTH_DISCORD_ID=${{ secrets.AUTH_DISCORD_ID }}" >> $GITHUB_ENV
-          echo "AUTH_DISCORD_SECRET=${{ secrets.AUTH_DISCORD_SECRET }}" >> $GITHUB_ENV
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
-          echo "VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}" >> $GITHUB_ENV
-          echo "VERCEL_ORG_ID=${{ secrets.VERCEL_ORG_ID }}" >> $GITHUB_ENV
-          echo "VERCEL_PROJECT_ID=${{ secrets.VERCEL_PROJECT_ID }}" >> $GITHUB_ENV
-
+     
       - name: Build the project
         run: npm run build
-        env:
-          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-          AUTH_DISCORD_ID: ${{ secrets.AUTH_DISCORD_ID }}
-          AUTH_DISCORD_SECRET: ${{ secrets.AUTH_DISCORD_SECRET }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
        
 
       - name: Install Vercel CLI
@@ -49,14 +40,7 @@ jobs:
 
       - name: Deploy to Vercel
         run: vercel --prod --confirm --token ${{ secrets.VERCEL_TOKEN }}
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
       
       - name: Create preview deployment
         run: vercel --prod --confirm --token ${{ secrets.VERCEL_TOKEN }} --previews
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
