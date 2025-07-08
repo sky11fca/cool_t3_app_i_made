@@ -3,7 +3,7 @@ name: DEPLOY TEST
 on:
   push:
     branches:
-      - main
+      - development
 env:
   AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
   AUTH_DISCORD_ID: ${{ secrets.AUTH_DISCORD_ID }}
@@ -40,6 +40,6 @@ jobs:
       - name: Pull Vercel environment information
         run: vercel pull --yes --environment production --token ${{ secrets.VERCEL_TOKEN }}
 
-      - name: Deploy to Vercel
+      - name: Deploy to Vercel (PREVIEW)
         run: vercel --prod --confirm --token ${{ secrets.VERCEL_TOKEN }}
 
