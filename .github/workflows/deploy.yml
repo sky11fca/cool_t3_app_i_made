@@ -9,7 +9,8 @@ env:
   AUTH_DISCORD_ID: "1380473007771750462"
   AUTH_DISCORD_SECRET: "3976730fcda219040d1358c57e1ecdafabc71e85c8895364a37eef99dacb820a"
   DATABASE_URL: "postgresql://postgres.oxubmywvdkdwhdleitzq:BobbyDB3002@aws-0-us-east-2.pooler.supabase.com:5432/postgres"
-  
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 jobs:
   deploy:
@@ -41,6 +42,3 @@ jobs:
       - name: Deploy to Vercel
         run: vercel --prod --confirm --token ${{ secrets.VERCEL_TOKEN }}
 
-      
-      - name: Create preview deployment
-        run: vercel --prod --confirm --token ${{ secrets.VERCEL_TOKEN }} --previews
