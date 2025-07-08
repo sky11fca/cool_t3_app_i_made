@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function RegisterForm() {
     return (
         <main>
@@ -18,6 +20,11 @@ export default function RegisterForm() {
             <div>
                 <label htmlFor="confirmPassword">Confirm Password:</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" required />
+            </div>
+            <div>
+                <p>
+                    Already have an account? <Link href="/login">Login</Link>
+                </p>
             </div>
             <button type="submit">Register</button>
         </form>

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function LoginForm() {
     return (
         <main>
@@ -10,6 +12,11 @@ export default function LoginForm() {
             <div>
                 <label htmlFor="password">Password:</label>
                 <input type="password" id="password" name="password" required />
+            </div>
+            <div>
+                <p>
+                    No account? <Link href="/register">Register</Link>
+                </p>
             </div>
             <button type="submit">Login</button>
         </form>
