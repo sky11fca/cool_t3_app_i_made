@@ -71,8 +71,8 @@ model User {
 
 model GeneratedLinks {
   id            String  @id @default(cuid())
-  name          String
-  url           String
+  name          String? @unique
+  url           String?
   requireslogin Boolean
 }
 

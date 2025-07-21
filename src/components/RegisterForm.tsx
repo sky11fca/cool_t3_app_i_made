@@ -6,10 +6,14 @@ import { useState } from "react";
 import { api } from "~/trpc/react";
 
 export default function RegisterForm() {
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [formData, setFormData] = useState({
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+
+    const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState("");
     const router = useRouter();
 
@@ -31,75 +35,96 @@ export default function RegisterForm() {
 
         setMessage("");
   
-        if(password !== confirmPassword) {
+        if(formData.password !== formData.confirmPassword) {
             setMessage("Passwords do not match");
             return;
         }
         
         signupMutation.mutate({
-            username,
-            email,
-            password,
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
         });
     };
     
     
     
     return (
-        <main>
-            <form method="POST">
-            <h2>Register</h2>
-            {message && <p style={{ color: "red" }}>{message}</p>}
-            <div>
-                <label htmlFor="username">Username:</label>
-                <input 
-                type="text" 
-                id="username" 
-                name="username" 
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                 />
-            </div>
-            <div>
-                <label htmlFor="email">Email:</label>
-                <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                 />
-            </div>
-            <div>
-                <label htmlFor="password">Password:</label>
-                <input 
-                type="password" 
-                id="password" 
-                name="password"
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)}
-                 />
-            </div>
-            <div>
-                <label htmlFor="confirmPassword">Confirm Password:</label>
-                <input 
-                type="password" 
-                id="confirmPassword" 
-                name="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                 />
-            </div>
-            <div>
-                <p>
-                    Already have an account? <Link href="/login">Login</Link>
-                </p>
-            </div>
-            <button 
-            type="submit"
-            onClick={handleSubmit}
-            >Register</button>
+      <main>
+        <form method="POST">
+          <h2>Register</h2>
+          {message && <p style={{ color: "red" }}>{message}</p>}
+          <div>
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={(e) =>
+                setFormData({ ...formData, username: e.target.value })
+              }
+            />
+          </div>
+          <div>
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password:</label>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+            />
+            <input
+              type="checkbox"
+              id="showPassword"
+              name="showPassword"
+              checked={showPassword}
+              onChange={() => setShowPassword(!showPassword)}
+            />
+          </div>
+          <div>
+            <label htmlFor="confirmPassword">Confirm Password:</label>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={(e) =>
+                setFormData({ ...formData, confirmPassword: e.target.value })
+              }
+            />
+            <input
+              type="checkbox"
+              id="showPassword"
+              name="showPassword"
+              checked={showPassword}
+              onChange={() => setShowPassword(!showPassword)}
+            />
+          </div>
+          <div>
+            <p>
+              Already have an account? <Link href="/login">Login</Link>
+            </p>
+          </div>
+          <button type="submit" onClick={handleSubmit}>
+            Register
+          </button>
         </form>
-        </main>
+      </main>
     );
 }

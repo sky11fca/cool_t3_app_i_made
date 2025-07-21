@@ -8,19 +8,16 @@ export default function LoginForm() {
     const [formData, setFormData] = useState({
       username: "",
       password: "",
-    })
+    });
+    const [showPassword, setShowPassword] = useState(false);
 
-  const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("");
     const [error, setError] = useState("");
 
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      // Handle login logic here
-
-      console.log("Username:", formData.username);
-      console.log("Password:", formData.password);
 
       try {
         const result = await signIn("credentials", {
@@ -41,8 +38,7 @@ export default function LoginForm() {
           }
       }
     };
-    
-    
+
     return (
       <main>
         <form method="POST">
@@ -67,7 +63,7 @@ export default function LoginForm() {
           <div>
             <label htmlFor="password">Password:</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               required
@@ -75,6 +71,13 @@ export default function LoginForm() {
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
+            />
+            <input
+              type="checkbox"
+              id="showPassword"
+              name="showPassword"
+              checked={showPassword}
+              onChange={() => setShowPassword(!showPassword)}
             />
           </div>
           <div>

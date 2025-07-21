@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import { db } from "~/server/db";
 import bcrypt from "bcryptjs";
+import * as process from "node:process";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -118,4 +119,6 @@ export const authConfig = {
   },
 
   secret: process.env.AUTH_SECRET,
+
+  debug: process.env.NODE_ENV === "development",
 } satisfies NextAuthConfig;
