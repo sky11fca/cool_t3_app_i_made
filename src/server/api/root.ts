@@ -1,7 +1,7 @@
 import { postRouter } from "~/server/api/routers/post";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
-import { signupRouter } from "~/server/api/routers/register";
-import { getLinksRouter } from "~/server/api/routers/getLinks";
+import { signupRouter } from "src/server/api/routers/register";
+import { getLinksRouter } from "src/server/api/routers/getLinks";
 /**
  * This is the primary router for your server.
  *
