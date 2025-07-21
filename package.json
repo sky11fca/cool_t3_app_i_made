@@ -5,12 +5,15 @@
   "type": "module",
   "scripts": {
     "build": "next build",
+    "electron:build": "next build && electron-builder",
     "check": "next lint && tsc --noEmit",
     "db:generate": "prisma migrate dev",
     "db:migrate": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "dev": "next dev --turbo",
+    "electrond": "wait-on http://localhost:3000 && electron ./electron-main.js",
+    "electron:dev": "concurrently \"npm:dev\" \"npm:electrond\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "postinstall": "prisma generate",
@@ -32,6 +35,9 @@
     "@trpc/server": "^11.0.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
+    "concurrently": "^9.2.0",
+    "electron": "^37.2.3",
+    "electron-builder": "^26.0.12",
     "next": "^15.2.3",
     "next-auth": "5.0.0-beta.25",
     "react": "^19.0.0",
@@ -39,6 +45,7 @@
     "reactjs-popup": "^2.0.6",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
+    "wait-on": "^8.0.3",
     "zod": "^3.24.2"
   },
   "devDependencies": {
