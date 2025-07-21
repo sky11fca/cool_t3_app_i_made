@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useSession, signOut} from "next-auth/react";
-import * as process from "node:process";
 
 export default function Navbar() {
   console.log(process.env.NODE_ENV);

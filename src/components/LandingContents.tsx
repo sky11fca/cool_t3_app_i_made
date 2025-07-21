@@ -10,36 +10,44 @@ export default function LandingContents() {
 
 
   return (
-        <main>
+    <main>
+      <div>
+        <p>Pick your poison:</p>
+        <div>
+          <p>RANDOM CONTENT</p>
+          <ul>
+            {offlineLinks?.map((link) => (
+              link.url ? (
+              <li key={link.id}>
+                <Link href={link.url}>{link.name}</Link>
+              </li>
+              ) : null
+            ))}
+          </ul>
+          <p>RANDOM CONTENT DELUXE</p>
+          {session ? (
+            <ul>
+              {onlineLinks?.map((link) => (
+                link.url ? (
+                <li key={link.id}>
+                  <Link href={link.url}>{link.name}</Link>
+                </li>
+                ) : null
+              ))}
+            </ul>
+          ) : (
             <div>
-                <p>Pick your poison:</p>
-                <div>
-                  <p>RANDOM CONTENT</p>
-                  <ul>
-                    {offlineLinks?.map((link) => (
-                      <li key={link.id}>
-                        <a href={link.url}>{link.name}</a>
-                      </li>
-                    ))}
-                  </ul>
-                  <p>RANDOM CONTENT DELUXE</p>
-                  {session ? (
-                      <ul>
-                        {onlineLinks?.map((link) => (
-                        <li key={link.id}>
-                          <a href={link.url}>{link.name}</a>
-                        </li>
-                        ))}
-                      </ul>
-                  ) : (
-                    <div>
-                      <Link href="/login" className="text-blue-500 hover:underline">Login</Link>
-                      <span> | </span>
-                      <Link href="/register" className="text-blue-500 hover:underline">Register</Link>
-                    </div>
-                  )}
-                </div>
+              <Link href="/login" className="text-blue-500 hover:underline">
+                Login
+              </Link>
+              <span> | </span>
+              <Link href="/register" className="text-blue-500 hover:underline">
+                Register
+              </Link>
             </div>
-        </main>
-    );
+          )}
+        </div>
+      </div>
+    </main>
+  );
 }
