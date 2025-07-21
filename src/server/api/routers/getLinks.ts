@@ -14,28 +14,23 @@ const deleteLinkSchema = z.object({
 export const getLinksRouter = createTRPCRouter({
   getOfflineUserLinks: publicProcedure
     .query(async ({ ctx}) => {
-      const links = await ctx.db.generatedLinks.findMany({
-        where:{
+      return ctx.db.generatedLinks.findMany({
+        where: {
           requireslogin: false,
         },
       });
-
-      return links;
     }),
   getOnlineUserLinks: publicProcedure
     .query(async ({ctx}) => {
-      const links = await ctx.db.generatedLinks.findMany({
-        where:{
+      return ctx.db.generatedLinks.findMany({
+        where: {
           requireslogin: true,
         },
-      });
-
-      return links;
+      })
     }),
   getAllLinks: publicProcedure
     .query(async ({ctx}) => {
-      const links = await ctx.db.generatedLinks.findMany();
-      return links;
+      return ctx.db.generatedLinks.findMany();
     }),
   addLink: publicProcedure
     .input(linkSchema)
