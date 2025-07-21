@@ -4,6 +4,7 @@ import type {AppType} from "next/app";
 import type {Session} from "next-auth";
 import {TRPCReactProvider} from "~/trpc/react";
 import Head from "next/head";
+import "../styles/globals.css";
 
 const MyApp: AppType<{session: Session | null}> = ({
     Component,

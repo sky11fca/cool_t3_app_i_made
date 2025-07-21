@@ -50,12 +50,13 @@ export default function RegisterForm() {
     
     
     return (
-      <main>
+      <main className="registration-form">
+        <h2>Register</h2>
         <form method="POST">
-          <h2>Register</h2>
+
           {message && <p style={{ color: "red" }}>{message}</p>}
           <div>
-            <label htmlFor="username">Username:</label>
+            <p>Username:</p>
             <input
               type="text"
               id="username"
@@ -67,7 +68,7 @@ export default function RegisterForm() {
             />
           </div>
           <div>
-            <label htmlFor="email">Email:</label>
+            <p>Email:</p>
             <input
               type="email"
               id="email"
@@ -79,7 +80,7 @@ export default function RegisterForm() {
             />
           </div>
           <div>
-            <label htmlFor="password">Password:</label>
+            <p>Password:</p>
             <input
               type={showPassword ? "text" : "password"}
               id="password"
@@ -98,7 +99,7 @@ export default function RegisterForm() {
             />
           </div>
           <div>
-            <label htmlFor="confirmPassword">Confirm Password:</label>
+            <p>Confirm Password:</p>
             <input
               type={showPassword ? "text" : "password"}
               id="confirmPassword"
@@ -116,7 +117,7 @@ export default function RegisterForm() {
               onChange={() => setShowPassword(!showPassword)}
             />
           </div>
-          <div>
+          <div className="registration-form-external">
             <p>
               Already have an account? <Link href="/login">Login</Link>
             </p>

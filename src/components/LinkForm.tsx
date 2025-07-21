@@ -32,8 +32,6 @@ export default function LinkForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log(formData);
-    console.log(truth);
 
     addLinkMutation.mutate({
       name: formData.name,

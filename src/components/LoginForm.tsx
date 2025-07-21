@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import "../styles/registration.css"
 
 export default function LoginForm() {
     
@@ -40,15 +41,15 @@ export default function LoginForm() {
     };
 
     return (
-      <main>
+      <main className="registration-form">
+        <h2>Login</h2>
         <form method="POST">
-          <h2>Login</h2>
           <div>
             {message && <p style={{ color: "red" }}>{message}</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
           </div>
-          <div>
-            <label htmlFor="username">Username:</label>
+          <div className="registration-form-username">
+            <p>Username:</p>
             <input
               type="text"
               id="username"
@@ -61,7 +62,7 @@ export default function LoginForm() {
             />
           </div>
           <div>
-            <label htmlFor="password">Password:</label>
+            <p>Password:</p>
             <input
               type={showPassword ? "text" : "password"}
               id="password"
@@ -80,7 +81,7 @@ export default function LoginForm() {
               onChange={() => setShowPassword(!showPassword)}
             />
           </div>
-          <div>
+          <div className="registration-form-external">
             <p>
               No account? <Link href="/register">Register</Link>
             </p>

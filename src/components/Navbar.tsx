@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useSession, signOut} from "next-auth/react";
+import "../styles/navbar.css"
 
 export default function Navbar() {
   console.log(process.env.NODE_ENV);
@@ -12,19 +13,24 @@ export default function Navbar() {
   return(
     <div>
     {session ? (
-      <div>
-        <Link href="/">{session.user.name}</Link>
-        <span> | </span>
-        <Link href="/" onClick={handleLogout}>Logout</Link>
+      <div className="navbar">
+        <div className="navbar-left-side">
+          <Link href="/">{session.user.name}</Link>
+        </div>
+        <div className="navbar-right-side">
+          <Link href="/" onClick={handleLogout}>Logout</Link>
+        </div>
       </div>
       ):
       (
-        <div>
-          <Link href="/">GUEST</Link>
-          <span> | </span>
-          <Link href="/login">Login</Link>
-          <span> | </span>
-          <Link href="/register">Register</Link>
+        <div className="navbar">
+          <div className="navbar-left-side">
+            <Link href="/">GUEST</Link>
+          </div>
+          <div className="navbar-right-side">
+            <Link href="/login">Login</Link>
+            <Link href="/register">Register</Link>
+          </div>
         </div>
       )}
     </div>

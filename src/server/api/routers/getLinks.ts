@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure} from "../trpc";
 
-const linkSchema = z.object({
+const addLinkSchema = z.object({
   name: z.string().min(1),
   url: z.string().url(),
   requireslogin: z.boolean(),
@@ -10,6 +10,14 @@ const linkSchema = z.object({
 const deleteLinkSchema = z.object({
   id: z.string(),
 })
+
+const updateLinkSchema = z.object({
+  id: z.string(),
+  name: z.string().min(1),
+  url: z.string().url(),
+  requireslogin: z.boolean(),
+})
+
 
 export const getLinksRouter = createTRPCRouter({
   getOfflineUserLinks: publicProcedure
@@ -33,7 +41,7 @@ export const getLinksRouter = createTRPCRouter({
       return ctx.db.generatedLinks.findMany();
     }),
   addLink: publicProcedure
-    .input(linkSchema)
+    .input(addLinkSchema)
     .mutation(async ({ctx, input}) => {
       const action = await ctx.db.generatedLinks.create({
         data: {
@@ -60,6 +68,29 @@ export const getLinksRouter = createTRPCRouter({
 
       if (!action) {
         console.log("failed to delete link");
+      }
+
+      return true;
+    }),
+  updateLink: publicProcedure
+    .input(updateLinkSchema)
+    .mutation(async ({ctx, input}) => {
+      console.log(input);
+      const action = await ctx.db.generatedLinks.update({
+
+
+        where: {
+          id: input.id,
+        },
+        data: {
+          name: input.name,
+          url: input.url,
+          requireslogin: input.requireslogin,
+        }
+      })
+
+      if(!action) {
+        console.log("failed to update link");
       }
 
       return true;
