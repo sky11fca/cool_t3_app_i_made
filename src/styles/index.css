@@ -1,0 +1,25 @@
+.landing-title{
+    text-align: center;
+}
+.landing-title h1{
+    font-size: 3rem;
+}
+
+.landing-content{
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.landing-content-prompt {
+    display: flex;
+    justify-content: center;
+}
+.landing-content-prompt a {
+    padding: 1rem;
+}
+.landing-content-offline{
+    padding: 1rem;
+}
+.landing-content-online{
+    padding: 1rem;
+}

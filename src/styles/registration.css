@@ -1,0 +1,31 @@
+.registration-form {
+    margin-top: 10%;
+    margin-bottom: 10%;
+    margin-left: 40%;
+    margin-right: 40%;
+    padding: 2rem;
+
+
+    text-align: center;
+    border: 1px solid black;
+}
+
+.registration-form h2{
+    font-size: 2rem;
+}
+
+.registration-form input{
+    border: 1px solid black;
+}
+
+form{
+    text-align: left;
+}
+.registration-form-external{
+    padding: 1rem;
+}
+
+button{
+    border: 1px solid black;
+    padding: 1%;
+}
