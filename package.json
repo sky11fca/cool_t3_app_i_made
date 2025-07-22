@@ -11,7 +11,7 @@
     "db:migrate": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "dev": "next dev --turbo",
+    "dev": "NODE_ENV=development next dev --turbo",
     "electrond": "wait-on http://localhost:3000 && electron ./electron-main.js",
     "electron:dev": "concurrently \"npm:dev\" \"npm:electrond\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",

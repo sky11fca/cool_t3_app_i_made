@@ -1,23 +1,12 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure} from "../trpc";
 
-const addLinkSchema = z.object({
-  name: z.string().min(1),
-  url: z.string().url(),
+const linkSchema = z.object({
+  id: z.string().optional(),
+  name: z.string().min(1, "Name is required"),
+  url: z.string().url("Invalid URL"),
   requireslogin: z.boolean(),
 })
-
-const deleteLinkSchema = z.object({
-  id: z.string(),
-})
-
-const updateLinkSchema = z.object({
-  id: z.string(),
-  name: z.string().min(1),
-  url: z.string().url(),
-  requireslogin: z.boolean(),
-})
-
 
 export const getLinksRouter = createTRPCRouter({
   getOfflineUserLinks: publicProcedure
@@ -41,58 +30,29 @@ export const getLinksRouter = createTRPCRouter({
       return ctx.db.generatedLinks.findMany();
     }),
   addLink: publicProcedure
-    .input(addLinkSchema)
+    .input(linkSchema)
     .mutation(async ({ctx, input}) => {
-      const action = await ctx.db.generatedLinks.create({
-        data: {
-          name: input.name,
-          url: input.url,
-          requireslogin: input.requireslogin,
-        }
-      })
-
-      if(!action) {
-        console.log("failed to create link");
-      }
-
-      return true;
+      return await ctx.db.generatedLinks.create({
+        data: input
+      });
     }),
   deleteLink: publicProcedure
-    .input(deleteLinkSchema)
+    .input(linkSchema)
     .mutation(async ({ctx, input}) => {
-      const action = await ctx.db.generatedLinks.delete({
+      return await ctx.db.generatedLinks.delete({
         where:{
           id: input.id,
         }
       })
-
-      if (!action) {
-        console.log("failed to delete link");
-      }
-
-      return true;
     }),
   updateLink: publicProcedure
-    .input(updateLinkSchema)
+    .input(linkSchema)
     .mutation(async ({ctx, input}) => {
-      console.log(input);
-      const action = await ctx.db.generatedLinks.update({
+      const {id, ...data} = input;
 
-
-        where: {
-          id: input.id,
-        },
-        data: {
-          name: input.name,
-          url: input.url,
-          requireslogin: input.requireslogin,
-        }
-      })
-
-      if(!action) {
-        console.log("failed to update link");
-      }
-
-      return true;
+      return await ctx.db.generatedLinks.update({
+        where: { id },
+        data,
+      });
     })
 })
