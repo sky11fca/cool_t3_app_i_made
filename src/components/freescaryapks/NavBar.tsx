@@ -1,4 +1,4 @@
-import "~/styles/freescaryapks/style.css"
+import "../../../../../../../styles/freescaryapks/style.css";
 import HomeScreen from "~/components/freescaryapks/HomeScreen";
 import DownloadScreen from "~/components/freescaryapks/DownloadScreen";
 import CharacterList from "~/components/freescaryapks/CharacterList";
