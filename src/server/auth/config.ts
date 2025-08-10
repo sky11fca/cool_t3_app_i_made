@@ -53,7 +53,10 @@ export const authConfig = {
             },
           });
           if(!user) {
-            return null;
+            return {
+              message: "User doesn'texist",
+              success: false
+            };
           }
 
           if(!user.password){
@@ -63,14 +66,18 @@ export const authConfig = {
           const passwordMatch = await bcrypt.compare(password, user.password);
 
           if(!passwordMatch){
-            return null;
+            return{
+              message: "Invalid password",
+              success: false
+            }
           }
 
           return{
             id: user.id,
             name: user.username,
             username: user.username,
-            email: user.email
+            email: user.email,
+            success: true
           }
         }
     }),
