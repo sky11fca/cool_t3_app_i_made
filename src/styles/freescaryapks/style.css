@@ -1,0 +1,13 @@
+.fsapkbg-navbar-body{
+    padding: 0rem;
+}
+
+.fsapkbg-navbar{
+    display: flex;
+    justify-content: space-between;
+}
+
+button{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}

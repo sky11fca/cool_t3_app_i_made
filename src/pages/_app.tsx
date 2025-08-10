@@ -13,7 +13,7 @@ const MyApp: AppType<{session: Session | null}> = ({
     return(
         <>
             <Head>
-                <title>Autism Corner</title>
+                <title>Free Scary Apks</title>
             </Head>
 
             <SessionProvider session={session}>

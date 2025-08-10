@@ -11,9 +11,11 @@ export default function LoginForm() {
       password: "",
     });
     const [showPassword, setShowPassword] = useState(false);
-
-    const [message, setMessage] = useState("");
-    const [error, setError] = useState("");
+    const [errors, setErrors] = useState({
+      username: "",
+      password: "",
+      general: ""
+    });
 
     const router = useRouter();
 
@@ -21,21 +23,38 @@ export default function LoginForm() {
       e.preventDefault();
 
       try {
+        if(formData.username === "") {
+          setErrors({...errors, username: "Username is required", general: "Invalid credentials"});
+          return;
+        }
+
+        if(formData.password === "") {
+          setErrors({...errors, password: "Password is required", general: "Invalid credentials"});
+          return;
+        }
+        else if(formData.password.length<6){
+          setErrors({...errors, password: "Password must be at least 6 characters", general: "Invalid credentials"});
+          return;
+        }
+
+
+
         const result = await signIn("credentials", {
           username: formData.username,
           password: formData.password,
             redirect: false,
         });
 
-        if (result == null) {
-          setMessage("invalid credentials");
-        } else {
-          void router.push("/");
+        if (!result) {
+          setErrors({...errors, general: "login failed"});
         }
+        
+
+        void router.push("/");
       } catch (error) {
-          setError("An error occurred during login. Please try again.");
+        setErrors({...errors, general: "UNKNOWN ERROR"});
           if (error instanceof Error) {
-            setError(`Login failed: ${error.message}`);
+            setErrors({...errors, general: "Login failed"});
           }
       }
     };
@@ -44,12 +63,11 @@ export default function LoginForm() {
       <main className="registration-form">
         <h2>Login</h2>
         <form method="POST">
-          <div>
-            {message && <p style={{ color: "red" }}>{message}</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
-          </div>
+          {errors.general && <p style={{ color: "red" }}>{errors.general}</p>}
           <div className="registration-form-username">
-            <p>Username:</p>
+            <div>
+              <p>Username:{errors.username ? "*"+ errors.username  : null}</p>
+            </div>
             <input
               type="text"
               id="username"
@@ -62,7 +80,7 @@ export default function LoginForm() {
             />
           </div>
           <div>
-            <p>Password:</p>
+            <p>Password:{errors.password ? "*" + errors.password : null}</p>
             <input
               type={showPassword ? "text" : "password"}
               id="password"

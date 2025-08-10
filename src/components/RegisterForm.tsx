@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { api } from "~/trpc/react";
+import "../styles/registration.css"
 
 export default function RegisterForm() {
     const [formData, setFormData] = useState({
@@ -13,19 +14,22 @@ export default function RegisterForm() {
       confirmPassword: "",
     });
 
+    const [errors, setErrors] = useState({
+      general: "",
+      username: "",
+      email: "",
+      password: "",
+    })
+
     const [showPassword, setShowPassword] = useState(false);
-    const [message, setMessage] = useState("");
     const router = useRouter();
 
     const signupMutation = api.signup.register.useMutation({
         onSuccess: (data) => {
-            setMessage(data.message);
-            if (data.success) {
-                void router.push("/login");
-            }
+            void router.push("/");
         },
         onError: (error) => {
-            setMessage(error.message);
+            setErrors({...errors, general: error.message});
         },
     });
 
@@ -33,11 +37,23 @@ export default function RegisterForm() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        setMessage("");
-  
-        if(formData.password !== formData.confirmPassword) {
-            setMessage("Passwords do not match");
-            return;
+        if(formData.username === "") {
+          setErrors({...errors, username: "Username is required", general: "Invalid credentials"});
+          return;
+        }
+
+        if(formData.email === "") {
+          setErrors({...errors, email: "Email is required", general: "Invalid credentials"});
+          return;
+        }
+
+        if(formData.password === "") {
+          setErrors({...errors, password: "Password is required", general: "Invalid credentials"});
+          return;
+        }
+        else if(formData.password !== formData.confirmPassword) {
+          setErrors({...errors, password: "Passwords do not match", general: "Invalid credentials"});
+          return
         }
         
         signupMutation.mutate({
@@ -54,9 +70,9 @@ export default function RegisterForm() {
         <h2>Register</h2>
         <form method="POST">
 
-          {message && <p style={{ color: "red" }}>{message}</p>}
+          {errors.general && <p style={{ color: "red" }}>{errors.general}</p>}
           <div>
-            <p>Username:</p>
+            <p>Username: {errors.username ? "*" + errors.username : null}</p>
             <input
               type="text"
               id="username"
@@ -68,7 +84,7 @@ export default function RegisterForm() {
             />
           </div>
           <div>
-            <p>Email:</p>
+            <p>Email: {errors.email ? "*" + errors.email : null}</p>
             <input
               type="email"
               id="email"
@@ -80,7 +96,7 @@ export default function RegisterForm() {
             />
           </div>
           <div>
-            <p>Password:</p>
+            <p>Password: {errors.password ? "*" + errors.password : null}</p>
             <input
               type={showPassword ? "text" : "password"}
               id="password"
